@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+{% block page_header_title %}
+    نمایش همه پست ها
+{% endblock %}
+{% block content %}
+    {% for post in my_posts %}
+        {# One single post #}
+        <div class="col-md-4">
+            <h2>{{ post.title }}</h2>
+            <h6>{{ post.created_date }}</h6>
+            <strong>{{ post.creator.first_name }} {{ post.creator.last_name }}</strong>
+            <p>{{ post.content }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
+{% block page_scripts %}{% endblock %}
