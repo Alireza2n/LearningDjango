@@ -6,6 +6,9 @@
     {% for post in my_posts %}
         {# One single post #}
         <div class="col-md-4">
+            {% if post.intro_image %}
+                <img src="{{ post.intro_image.url }}" class="img-thumbnail">
+            {% endif %}
             <h2>{{ post.title }}</h2>
             <h6>{{ post.created_date }}</h6>
             <strong>{{ post.creator.first_name }} {{ post.creator.last_name }}</strong>
