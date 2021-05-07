@@ -28,14 +28,28 @@
             </ul>
         </div>
     </nav>
+    {# Django's messages #}
+    <div class="row mt-3 mb-3">
+        <div class="col-12">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger alert-dismissible">
+                        {{ message }}
+                        <button type="button" class="close">&times;</button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {# django's messages ends #}
     <div class="row mb-4 mt-4">
         {% block content %}YOUR CONTENT GOES HERE{% endblock %}
     </div>
 </div>
 <script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-{% block page_scripts %}
-{% endblock %}
+
+{% block page_scripts %}{% endblock %}
 
 <footer class="footer">
     <div class="container">
