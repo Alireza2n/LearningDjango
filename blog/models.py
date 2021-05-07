@@ -9,6 +9,7 @@ class Post(models.Model):
     creator = models.ForeignKey('auth.User', verbose_name='کاربر', on_delete=models.PROTECT)
     content = models.TextField(verbose_name='متن', null=True)
     title = models.CharField(max_length=100, verbose_name='عنوان پست')
+    intro_image = models.ImageField(verbose_name='عکس مقدمه پست', blank=True, null=True)
 
     class Meta:
         ordering = ('title',)

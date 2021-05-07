@@ -27,7 +27,7 @@ def create_post(request):
     form_instance = forms.PostForm()
 
     if request.method == 'POST':
-        form_instance = forms.PostForm(data=request.POST)
+        form_instance = forms.PostForm(data=request.POST, files=request.FILES)
         if form_instance.is_valid():
             form_instance.save()
             return redirect('blog:show-all-posts')
