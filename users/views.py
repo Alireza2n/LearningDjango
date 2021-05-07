@@ -1,6 +1,9 @@
+from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
+from django.utils.http import is_safe_url
+
 from . import forms
 
 
@@ -19,7 +22,12 @@ def login_view(request):
             if user is not None:
                 # The user was found and authenticated
                 login(request, user)
-                return redirect('home')
+                next_url = request.GET.get('next', '/')
+                # Make sure we only redirect to internal urls
+                if is_safe_url(next_url, settings.ALLOWED_HOSTS):
+                    return redirect(next_url)
+                else:
+                    return redirect('/')
             else:
                 # The user or password is invalid
                 messages.error(request, "Username or password was incorrect. ⁉")
@@ -32,8 +40,10 @@ def login_view(request):
     )
 
 
-def logout(request):
+def logout_view(request):
     """
     Logs out the user
     """
-    pass
+    logout(request)
+    messages.info(request, "You\'ve been logged out.")
+    return redirect('home')
