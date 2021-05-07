@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from . import forms
@@ -16,9 +17,12 @@ def login_view(request):
             password = form_instance.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
             if user is not None:
+                # The user was found and authenticated
                 login(request, user)
                 return redirect('home')
-
+            else:
+                # The user or password is invalid
+                messages.error(request, "Username or password was incorrect. ⁉")
     return render(
         request,
         context={
