@@ -1,5 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 from . import models, forms
 
@@ -35,3 +38,21 @@ def create_post(request):
     return render(request, 'blog/create_post.html', {
         'form': form_instance,
     })
+
+
+@require_POST
+@csrf_exempt
+def like_post(request, id):
+    """
+    Increments post's like field
+    """
+    result = False
+
+    # Main logic
+    post_obj = get_object_or_404(klass=models.Post, pk=id)
+    post_obj.likes += 1
+    post_obj.save()
+    result = True
+
+    # Response
+    return JsonResponse({'result': result, 'likes': post_obj.likes})

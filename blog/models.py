@@ -10,6 +10,7 @@ class Post(models.Model):
     content = models.TextField(verbose_name='متن', null=True)
     title = models.CharField(max_length=100, verbose_name='عنوان پست')
     intro_image = models.ImageField(verbose_name='عکس مقدمه پست', blank=True, null=True)
+    likes = models.IntegerField(default=0)
 
     class Meta:
         ordering = ('title',)
