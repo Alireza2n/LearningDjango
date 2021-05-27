@@ -9,20 +9,21 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="title">عنوان پست</label>
-                <input type="text" id="title" class="form-control" name="title">
+                <input type="text" id="title" class="form-control" value="{{ form.initial.title }}" name="title">
             </div>
             <div class="form-group">
                 <label for="content">متن پست</label>
-                <textarea name="content" id="content" cols="50" rows="10" class="form-control"></textarea>
+                <textarea name="content" id="content" cols="50" rows="10" class="form-control">{{ form.initial.content }}</textarea>
             </div>
             <div class="form-group">
                 {{ form.intro_image }}
+                {% if form.instance.intro_image %}
+                    <a href="{{ form.instance.intro_image.url }}">Current file</a>
+                {% endif %}
             </div>
             <div class="form-group">
                 <label for="creator">کاربر ثبت کننده</label>
-                <select id="creator" name="creator" class="form-control">
-                    <option value="1">Alireza</option>
-                </select>
+                {{ form.creator }}
             </div>
             <button type="submit" class="btn btn-primary">Create the post</button>
         </form>

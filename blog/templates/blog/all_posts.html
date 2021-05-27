@@ -9,7 +9,12 @@
             {% if post.intro_image %}
                 <img src="{{ post.intro_image.url }}" class="img-thumbnail">
             {% endif %}
-            <h2>{{ post.title }}</h2>
+            <div class="d-flex">
+                <h2 class="">{{ post.title }}</h2>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'blog:edit' post.pk %}" class="float-left">✏</a>
+                {% endif %}
+            </div>
             <h6>{{ post.created_date }}</h6>
             <strong>{{ post.creator.first_name }} {{ post.creator.last_name }}</strong>
             <p>{{ post.content }}</p>

@@ -40,6 +40,21 @@ def create_post(request):
     })
 
 
+def edit_post(request, pk):
+    """
+    Edit a single post
+    """
+    post_instance = get_object_or_404(klass=models.Post, pk=pk)
+    if request.method == 'POST':
+        pass
+    else:
+        # The GET method
+        form_instance = forms.PostForm(instance=post_instance)
+        return render(
+            request, context={'form': form_instance}, template_name='blog/create_post.html'
+        )
+
+
 @require_POST
 @csrf_exempt
 def like_post(request, id):
