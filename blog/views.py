@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, ListView
 
 from . import models, forms
 
@@ -20,8 +20,7 @@ def show_all_posts(request):
         request=request,
         context={
             'my_posts': my_posts,
-            'page_title': 'Show all posts',
-            'category_list': models.Category.objects.values_list('name')
+            'page_title': 'Show all posts'
         },
         template_name='blog/all_posts.html'
     )
@@ -115,3 +114,8 @@ class UpdateCategory(LoginRequiredMixin, UpdateView):
 
 class ViewPost(DetailView):
     model = models.Post
+
+
+class FilterPostByCategory(ListView):
+    model = models.Post
+    template_name = 'blog/all_posts.html'

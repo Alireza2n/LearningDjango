@@ -1,5 +1,7 @@
 import datetime
 
+from blog.models import Category
+
 
 def shared_context(request):
     """
@@ -7,5 +9,6 @@ def shared_context(request):
     across all templates
     """
     return {
-        'year': datetime.datetime.today().year
+        'year': datetime.datetime.today().year,
+        'category_list': Category.objects.values_list('name')
     }

@@ -10,4 +10,5 @@ urlpatterns = [
     path('like-post/<int:id>', views.like_post, name='like-post'),
     path('edit/<int:pk>', views.edit_post, name='edit'),
     path('post/<int:pk>', views.ViewPost.as_view(), name='detail'),
+    path('category/', views.FilterPostByCategory.as_view(), name='post-by-category'),
 ]
