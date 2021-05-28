@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -32,11 +33,13 @@ def create_post(request):
     if request.method == 'POST':
         form_instance = forms.PostForm(data=request.POST, files=request.FILES)
         if form_instance.is_valid():
+            form_instance.instance.creator = request.user
             form_instance.save()
             return redirect('blog:show-all-posts')
 
-    return render(request, 'blog/create_post.html', {
+    return render(request, 'blog/post_form.html', {
         'form': form_instance,
+        'page_title': 'Create a new post'
     })
 
 
@@ -46,12 +49,25 @@ def edit_post(request, pk):
     """
     post_instance = get_object_or_404(klass=models.Post, pk=pk)
     if request.method == 'POST':
-        pass
+        form_instance = forms.PostForm(
+            instance=post_instance,
+            data=request.POST,
+            files=request.FILES
+        )
+        if form_instance.is_valid():
+            form_instance.save()
+            messages.success(request, 'Saved successfully.')
+            return redirect('blog:show-all-posts')
     else:
         # The GET method
         form_instance = forms.PostForm(instance=post_instance)
         return render(
-            request, context={'form': form_instance}, template_name='blog/create_post.html'
+            request,
+            context={
+                'form': form_instance,
+                'page_title': f'Edit post #{post_instance.pk}'
+            },
+            template_name='blog/post_form.html'
         )
 
 

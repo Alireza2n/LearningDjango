@@ -19,6 +19,5 @@ class PostForm(forms.ModelForm):
         fields = [
             'title',
             'content',
-            'creator',
             'intro_image',
         ]
