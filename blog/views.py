@@ -1,9 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.views.generic import CreateView, DetailView
 
 from . import models, forms
 
@@ -87,3 +90,18 @@ def like_post(request, id):
 
     # Response
     return JsonResponse({'result': result, 'likes': post_obj.likes})
+
+
+class CreateCategory(LoginRequiredMixin, CreateView):
+    model = models.Category
+    fields = (
+        'name',
+    )
+    success_url = reverse_lazy('blog:show-all-posts')
+    extra_context = {
+        'page_title': 'Create a category'
+    }
+
+
+class ViewPost(DetailView):
+    pass

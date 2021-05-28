@@ -20,4 +20,5 @@ class PostForm(forms.ModelForm):
             'title',
             'content',
             'intro_image',
+            'categories'
         ]

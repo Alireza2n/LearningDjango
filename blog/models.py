@@ -11,6 +11,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100, verbose_name='عنوان پست')
     intro_image = models.ImageField(verbose_name='عکس مقدمه پست', blank=True, null=True)
     likes = models.IntegerField(default=0)
+    categories = models.ManyToManyField('blog.Category')
 
     class Meta:
         ordering = ('title',)
@@ -19,3 +20,13 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+
+
+class Category(models.Model):
+    """
+    Categories for posts
+    """
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

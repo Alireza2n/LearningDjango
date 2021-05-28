@@ -1,0 +1,19 @@
+{% extends 'blog/base.html' %}
+{% block page_header_title %}
+    🆕 {{ page_title }}
+{% endblock %}
+{% block content %}
+    <div class="col-12">
+        <h3>{{ page_title }}</h3>
+        <form method="post">
+            {% csrf_token %}
+            {% with field=form.name %}
+                <div class="form-group">
+                    <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                    <input type="text" id="{{ field.auto_id }}" class="form-control" value="{{ field.initial.name }}" name="{{ field.name }}">
+                </div>
+            {% endwith %}
+            <button type="submit" class="btn btn-primary">💾 Save</button>
+        </form>
+    </div>
+{% endblock %}
