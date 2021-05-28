@@ -7,7 +7,12 @@
         {% if object.intro_image %}
             <img src="{{ object.intro_image.url }}" class="img-fluid" alt="{{ object.intro_image.name }}">
         {% endif %}
-        <h1>{{ object.title }}</h1>
+        <div class="d-flex">
+            <h1>{{ object.title }}</h1>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'blog:edit' post.pk %}" class="float-left">✏</a>
+            {% endif %}
+        </div>
         <h3>Created by: {{ object.creator.get_full_name }}</h3>
         <h4>Created on: {{ object.created_date }}</h4>
         <hr>
