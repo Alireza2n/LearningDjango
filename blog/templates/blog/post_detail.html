@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+{% block page_header_title %}
+    Post: {{ object.title }}
+{% endblock %}
+{% block content %}
+    <div class="col-12">
+        {% if object.intro_image %}
+            <img src="{{ object.intro_image.url }}" class="img-fluid" alt="{{ object.intro_image.name }}">
+        {% endif %}
+        <h1>{{ object.title }}</h1>
+        <h3>Created by: {{ object.creator.get_full_name }}</h3>
+        <h4>Created on: {{ object.created_date }}</h4>
+        <hr>
+        <p>{{ object.content }}</p>
+    </div>
+{% endblock %}

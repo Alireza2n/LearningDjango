@@ -104,4 +104,4 @@ class CreateCategory(LoginRequiredMixin, CreateView):
 
 
 class ViewPost(DetailView):
-    pass
+    model = models.Post
