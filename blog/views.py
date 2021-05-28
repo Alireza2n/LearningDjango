@@ -19,7 +19,7 @@ def show_all_posts(request):
     return render(
         request=request,
         context={
-            'my_posts': my_posts,
+            'object_list': my_posts,
             'page_title': 'Show all posts'
         },
         template_name='blog/all_posts.html'
@@ -119,3 +119,9 @@ class ViewPost(DetailView):
 class FilterPostByCategory(ListView):
     model = models.Post
     template_name = 'blog/all_posts.html'
+
+    def get_queryset(self):
+        category_slug = self.kwargs.get('category_slug', None)
+        qs = super().get_queryset()
+        qs = qs.filter(categories__slug=category_slug)
+        return qs

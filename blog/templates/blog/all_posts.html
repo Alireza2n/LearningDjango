@@ -8,7 +8,9 @@
         <h5>Filter by category:</h5>
         <ul>
             {% for category in category_list %}
-                <li>{{ category.0 }}</li>
+                <li>
+                    <a href="{% url 'blog:post-by-category' category.0 %}">{{ category.0 }}</a>
+                </li>
             {% endfor %}
         </ul>
     </div>
