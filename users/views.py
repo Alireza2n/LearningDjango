@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.http import is_safe_url
@@ -53,7 +54,7 @@ def logout_view(request):
 
 
 # View class
-class EditUserProfile(UpdateView):
+class EditUserProfile(LoginRequiredMixin, UpdateView):
     """
     Updates a user profile
     """
@@ -65,3 +66,9 @@ class EditUserProfile(UpdateView):
     )
     template_name = 'users/user_form.html'
     success_url = reverse_lazy('blog:show-all-posts')
+
+    def get_object(self, queryset=None):
+        """
+        Overridden to only return current logged on user
+        """
+        return self.request.user
