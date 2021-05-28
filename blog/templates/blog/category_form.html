@@ -10,7 +10,13 @@
             {% with field=form.name %}
                 <div class="form-group">
                     <label for="{{ field.auto_id }}">{{ field.label }}</label>
-                    <input type="text" id="{{ field.auto_id }}" class="form-control" value="{{ field.initial.name }}" name="{{ field.name }}">
+                    <input type="text" id="{{ field.auto_id }}" class="form-control" value="{{ field.initial }}" name="{{ field.name }}">
+                </div>
+            {% endwith %}
+            {% with field=form.slug %}
+                <div class="form-group">
+                    <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                    <input type="text" id="{{ field.auto_id }}" class="form-control" value="{{ field.initial }}" name="{{ field.name }}">
                 </div>
             {% endwith %}
             <button type="submit" class="btn btn-primary">💾 Save</button>

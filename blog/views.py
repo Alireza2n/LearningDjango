@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, UpdateView
 
 from . import models, forms
 
@@ -97,11 +97,20 @@ class CreateCategory(LoginRequiredMixin, CreateView):
     model = models.Category
     fields = (
         'name',
+        'slug'
     )
     success_url = reverse_lazy('blog:show-all-posts')
     extra_context = {
         'page_title': 'Create a category'
     }
+
+
+class UpdateCategory(LoginRequiredMixin, UpdateView):
+    model = models.Category
+    fields = (
+        'name', 'slug'
+    )
+    success_url = reverse_lazy('blog:show-all-posts')
 
 
 class ViewPost(DetailView):
