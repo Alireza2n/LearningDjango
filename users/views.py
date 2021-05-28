@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.utils.http import is_safe_url
 from django.views.generic import UpdateView
 
@@ -53,6 +54,9 @@ def logout_view(request):
 
 # View class
 class EditUserProfile(UpdateView):
+    """
+    Updates a user profile
+    """
     model = get_user_model()
     fields = (
         'first_name',
@@ -60,3 +64,4 @@ class EditUserProfile(UpdateView):
         'email'
     )
     template_name = 'users/user_form.html'
+    success_url = reverse_lazy('blog:show-all-posts')

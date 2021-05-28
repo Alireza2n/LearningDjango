@@ -9,7 +9,7 @@
                     <label for="{{ field.auto_id }}" class="control-label mb-1">
                         {{ field.label }}
                     </label>
-                    <input id="{{ field.auto_id }}" type="text" class="form-control" value="{{ field.initial }}">
+                    <input id="{{ field.auto_id }}" name="{{ field.name }}" type="text" class="form-control" value="{{ field.initial }}">
                     {{ field.errors }}
                 </div>
             {% endwith %}
@@ -18,7 +18,7 @@
                     <label for="{{ field.auto_id }}" class="control-label mb-1">
                         {{ field.label }}
                     </label>
-                    <input id="{{ field.auto_id }}" type="text" class="form-control" value="{{ field.initial }}">
+                    <input id="{{ field.auto_id }}" name="{{ field.name }}" type="text" class="form-control" value="{{ field.initial }}">
                     {{ field.errors }}
                 </div>
             {% endwith %}
@@ -27,7 +27,7 @@
                     <label for="{{ field.auto_id }}" class="control-label mb-1">
                         {{ field.label }}
                     </label>
-                    <input id="{{ field.auto_id }}" type="email" class="form-control" value="{{ field.initial }}">
+                    <input id="{{ field.auto_id }}" name="{{ field.name }}" type="email" class="form-control" value="{{ field.initial }}">
                     {{ field.errors }}
                 </div>
             {% endwith %}
