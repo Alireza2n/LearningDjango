@@ -20,7 +20,8 @@ def show_all_posts(request):
         request=request,
         context={
             'my_posts': my_posts,
-            'page_title': 'Show all posts'
+            'page_title': 'Show all posts',
+            'category_list': models.Category.objects.values_list('name')
         },
         template_name='blog/all_posts.html'
     )

@@ -5,7 +5,12 @@
 {% endblock %}
 {% block content %}
     <div class="col-2">
-        TEST
+        <h5>Filter by category:</h5>
+        <ul>
+            {% for category in category_list %}
+                <li>{{ category.0 }}</li>
+            {% endfor %}
+        </ul>
     </div>
     <div class="col-10 row justify-content-md-left">
         {% for post in my_posts %}
