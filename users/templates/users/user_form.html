@@ -1,0 +1,39 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <div class="container">
+        <h3>Edit User Profile 👤</h3>
+        <form method="post">
+            {% csrf_token %}
+            {% with field=form.first_name %}
+                <div class="form-group">
+                    <label for="{{ field.auto_id }}" class="control-label mb-1">
+                        {{ field.label }}
+                    </label>
+                    <input id="{{ field.auto_id }}" type="text" class="form-control" value="{{ field.initial }}">
+                    {{ field.errors }}
+                </div>
+            {% endwith %}
+            {% with field=form.last_name %}
+                <div class="form-group">
+                    <label for="{{ field.auto_id }}" class="control-label mb-1">
+                        {{ field.label }}
+                    </label>
+                    <input id="{{ field.auto_id }}" type="text" class="form-control" value="{{ field.initial }}">
+                    {{ field.errors }}
+                </div>
+            {% endwith %}
+            {% with field=form.email %}
+                <div class="form-group">
+                    <label for="{{ field.auto_id }}" class="control-label mb-1">
+                        {{ field.label }}
+                    </label>
+                    <input id="{{ field.auto_id }}" type="email" class="form-control" value="{{ field.initial }}">
+                    {{ field.errors }}
+                </div>
+            {% endwith %}
+            <button type="submit" class="btn btn-primary" value="Submit">
+                💾 Save
+            </button>
+        </form>
+    </div>
+{% endblock %}

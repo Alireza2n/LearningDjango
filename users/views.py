@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
+from django.views.generic import UpdateView
 
 from . import forms
 
@@ -40,6 +41,7 @@ def login_view(request):
     )
 
 
+# View function
 def logout_view(request):
     """
     Logs out the user
@@ -47,3 +49,14 @@ def logout_view(request):
     logout(request)
     messages.info(request, "You\'ve been logged out.")
     return redirect('home')
+
+
+# View class
+class EditUserProfile(UpdateView):
+    model = get_user_model()
+    fields = (
+        'first_name',
+        'last_name',
+        'email'
+    )
+    template_name = 'users/user_form.html'
