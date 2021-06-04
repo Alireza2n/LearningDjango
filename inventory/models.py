@@ -26,3 +26,6 @@ class Product(models.Model):
         max_length=100,
         choices=enums.ProductTypes.choices
     )
+
+    def __str__(self):
+        return self.name

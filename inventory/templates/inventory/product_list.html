@@ -1,0 +1,8 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    {% for product in object_list %}
+        <div class="col-3">
+            {{ product }}
+        </div>
+    {% endfor %}
+{% endblock %}

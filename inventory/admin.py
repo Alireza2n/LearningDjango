@@ -5,6 +5,16 @@ from . import models
 admin.site.site_header = 'فروشگاه هنری من'
 
 
+@admin.action(description='فعال کردن کالا')
+def set_product_as_active(modeladmin, request, queryset):
+    queryset.update(is_active=True)
+
+
+@admin.action(description='غیرفعال کردن کالا')
+def set_product_as_inactive(modeladmin, request, queryset):
+    queryset.update(is_active=False)
+
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
@@ -32,3 +42,7 @@ class ProductAdmin(admin.ModelAdmin):
         'is_active',
         'type',
     )
+    actions = [
+        set_product_as_active,
+        set_product_as_inactive
+    ]
