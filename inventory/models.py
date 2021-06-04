@@ -9,12 +9,14 @@ class Product(models.Model):
     """
     name = models.CharField(
         max_length=200,
-        verbose_name='نام کالا'
+        verbose_name='نام کالا',
+        db_index=True
     )
     description = models.TextField(
         verbose_name=_('Description'),
         help_text='متن نمایشی برای توصیف محصول'
     )
+    price = models.PositiveIntegerField(default=0, db_index=True)
     qty_in_stock = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(
         default=False,
