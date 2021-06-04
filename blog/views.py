@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -31,6 +32,10 @@ def create_post(request):
     """
     Creates a post
     """
+
+    if not request.user.has_perm('blog.add_post'):
+        raise PermissionDenied('Access denied.')
+
     form_instance = forms.PostForm()
 
     if request.method == 'POST':
@@ -96,7 +101,7 @@ def like_post(request, id):
     return JsonResponse({'result': result, 'likes': post_obj.likes})
 
 
-class CreateCategory(LoginRequiredMixin, CreateView):
+class CreateCategory(PermissionRequiredMixin, CreateView):
     model = models.Category
     fields = (
         'name',
@@ -106,6 +111,7 @@ class CreateCategory(LoginRequiredMixin, CreateView):
     extra_context = {
         'page_title': 'Create a category'
     }
+    permission_required = 'blog.add_category'
 
 
 class UpdateCategory(LoginRequiredMixin, UpdateView):

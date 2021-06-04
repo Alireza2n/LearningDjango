@@ -23,15 +23,19 @@
                             <span class="sr-only"></span></a>
                     </li>
                 {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'blog:create-post' %}">Create Post
-                        <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'blog:create-category' %}">
-                        Create Category
-                    </a>
-                </li>
+                {% if perms.blog.add_post %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:create-post' %}">Create Post
+                            <span class="sr-only">(current)</span></a>
+                    </li>
+                {% endif %}
+                {% if perms.blog.add_category %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:create-category' %}">
+                            Create Category
+                        </a>
+                    </li>
+                {% endif %}
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'users:logout' %}">Logout 👋🏻
