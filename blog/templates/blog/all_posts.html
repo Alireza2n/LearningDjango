@@ -37,6 +37,28 @@
                 <a class="btn btn-outline-dark text-danger like-btn" data-post-id="{{ post.id }}">❤ Like (<span id="like-count-{{ post.id }}">{{ post.likes }}</span> Likes)</a>
             </div>
         {% endfor %}
+        {% for post in object_list_2 %}
+            {# One single post #}
+            <div class="col-4 mb-4">
+                {% if post.intro_image %}
+                    <a href="{% url 'blog:detail' post.pk %}">
+                        <img src="{{ post.intro_image.url }}" class="img-thumbnail">
+                    </a>
+                {% else %}
+                    <a href="{% url 'blog:detail' post.pk %}">
+                        <img src="{% static 'img/placeholder.png' %}" class="img-thumbnail">
+                    </a>
+                {% endif %}
+                <h3 class="">
+                    <a href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a>
+                </h3>
+                <h6>{{ post.created_date }} By {{ post.creator.username }}</h6>
+                <strong>{{ post.creator.first_name }} {{ post.creator.last_name }}</strong>
+                <p>{{ post.content|truncatewords:10 }}</p>
+                {# Like button for the post #}
+                <a class="btn btn-outline-dark text-danger like-btn" data-post-id="{{ post.id }}">❤ Like (<span id="like-count-{{ post.id }}">{{ post.likes }}</span> Likes)</a>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
 {% block page_scripts %}

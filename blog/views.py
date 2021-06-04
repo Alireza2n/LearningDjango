@@ -16,11 +16,17 @@ def show_all_posts(request):
     """
     This view will show all of the posts
     """
-    my_posts = models.Post.objects.all()
+    if request.user.is_authenticated:
+        my_posts = models.Post.objects.filter(creator=request.user)
+        other_posts = models.Post.objects.exclude(creator=request.user)
+    else:
+        my_posts = models.Post.objects.all()
+        other_posts = []
     return render(
         request=request,
         context={
             'object_list': my_posts,
+            'object_list_2': other_posts,
             'page_title': 'Show all posts'
         },
         template_name='blog/all_posts.html'
