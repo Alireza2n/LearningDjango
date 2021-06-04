@@ -59,6 +59,8 @@ def edit_post(request, pk):
 
     if not post_instance.creator == request.user:
         return HttpResponseForbidden('Access denied.')
+    if not request.user.has_perm('blog.change_post'):
+        raise PermissionDenied()
 
     if request.method == 'POST':
         form_instance = forms.PostForm(
@@ -114,12 +116,13 @@ class CreateCategory(PermissionRequiredMixin, CreateView):
     permission_required = 'blog.add_category'
 
 
-class UpdateCategory(LoginRequiredMixin, UpdateView):
+class UpdateCategory(PermissionRequiredMixin, UpdateView):
     model = models.Category
     fields = (
         'name', 'slug'
     )
     success_url = reverse_lazy('blog:show-all-posts')
+    permission_required = 'blog.change_category'
 
 
 class ViewPost(DetailView):
