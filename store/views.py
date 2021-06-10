@@ -18,12 +18,23 @@ def add_to_cart(request, product_id):
         return redirect('inventory:list')
 
     if 'cart' not in request.session.keys():
-        request.session['cart'] = []
+        request.session['cart'] = {
+            # '1': 1
+            # Product ID : Qty
+        }
 
-    request.session['cart'] += [{
-        'product_id': product_instance.pk,
-        'qty': 1
-    }]
+    # Method1
+    if str(product_instance.pk) in request.session['cart'].keys():
+        request.session['cart'][str(product_instance.pk)] += 1
+    else:
+        request.session['cart'][str(product_instance.pk)] = 1
+
+    # Method 2
+    # try:
+    #     print(request.session['cart'][str(product_instance.pk)])
+    #     request.session['cart'][str(product_instance.pk)] += 1
+    # except KeyError:
+    #     request.session['cart'][str(product_instance.pk)] = 1
 
     print(request.session['cart'])
     messages.success(
