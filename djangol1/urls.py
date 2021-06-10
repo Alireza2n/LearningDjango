@@ -25,6 +25,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('users/', include('users.urls')),
     path('inventory/', include('inventory.urls')),
+    path('store/', include('store.urls')),
     path('', show_all_posts, name='home'),
 ]
 

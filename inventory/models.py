@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext as _
+
 from . import enums
 
 
@@ -29,3 +30,17 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def can_be_sold(self):
+        """
+        Can this product be sold?
+        :returns: bool
+        """
+        return self.is_active
+
+    def is_in_stock(self, qty):
+        """
+        Is product in stock with requested Qty?
+        :returns: bool
+        """
+        return qty <= self.qty_in_stock
