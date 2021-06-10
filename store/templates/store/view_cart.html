@@ -15,6 +15,10 @@
                 <td>{{ object.product }}</td>
                 <td>{{ object.qty }}</td>
             </tr>
+        {% empty %}
+            <tr>
+                <td colspan="3">سبد شما خالی است.</td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>
