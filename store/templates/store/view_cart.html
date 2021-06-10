@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ردیف</th>
+            <th>کالا</th>
+            <th>تعداد</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td>{{ forloop.revcounter }}</td>
+                <td>{{ object.product }}</td>
+                <td>{{ object.qty }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

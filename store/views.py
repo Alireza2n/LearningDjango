@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 
 from inventory import models as inventory_models
 
@@ -33,3 +33,18 @@ def add_to_cart(request, product_id):
         f' به سبد افزوده شد.'
     )
     return redirect('inventory:list')
+
+
+def view_cart(request):
+    object_list = []
+    for item in request.session['cart']:
+        object_list += [
+            {
+                'product': inventory_models.Product.objects.get(pk=item['product_id']),
+                'qty': item['qty']
+            }
+        ]
+
+    return render(
+        request, 'store/view_cart.html', context={'object_list': object_list}
+    )
