@@ -29,6 +29,9 @@ def add_to_cart(request, product_id):
     else:
         request.session['cart'][str(product_instance.pk)] = 1
 
+    # Save the session!
+    request.session.save()
+
     # Method 2
     # try:
     #     print(request.session['cart'][str(product_instance.pk)])
