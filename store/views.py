@@ -20,11 +20,12 @@ def add_to_cart(request, product_id):
     if 'cart' not in request.session.keys():
         request.session['cart'] = []
 
-    request.session['cart'].append({
+    request.session['cart'] += [{
         'product_id': product_instance.pk,
         'qty': 1
-    })
+    }]
 
+    print(request.session['cart'])
     messages.success(
         request,
         f'کالای '
