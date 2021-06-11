@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from . import views
 
+# Use a default router to generate urls for ViewSets
 router = DefaultRouter()
 router.register('orders', views.OrderViewSet)
 
