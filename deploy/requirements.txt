@@ -1,3 +1,4 @@
 Django
 django-jalali
 psycopg2-binary
+django-rest-framework
