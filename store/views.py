@@ -3,8 +3,10 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from rest_framework import viewsets
 
 from inventory import models as inventory_models
+from . import models, serializers
 
 
 def add_to_cart(request, product_id):
@@ -106,3 +108,16 @@ def deduct_from_cart(request):
     except KeyError:
         # What if the product is not in the cart?
         return JsonResponse({'success': False, 'error': 'Invalid data. Not in the cart.'}, status=400)
+
+
+"""
+DRF Views
+"""
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for store.Order
+    """
+    queryset = models.Order.objects.all()
+    serializer_class = serializers.OrderSerializer
