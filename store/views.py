@@ -54,8 +54,8 @@ def view_cart(request):
     for item in request.session.get('cart', []):
         object_list += [
             {
-                'product': inventory_models.Product.objects.get(pk=item['product_id']),
-                'qty': item['qty']
+                'product': inventory_models.Product.objects.get(pk=int(item)),
+                'qty': request.session['cart'][item]
             }
         ]
 
