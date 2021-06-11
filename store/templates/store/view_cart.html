@@ -14,9 +14,12 @@
             <tr>
                 <td>{{ forloop.revcounter }}</td>
                 <td>{{ object.product }}</td>
-                <td>{{ object.qty }}</td>
                 <td>
-                    <a href="{% url 'store:delete-from-cart' object.product.pk %}" class="btn btn-sm btn-danger">
+                    <a class="deduct-btn btn btn-sm rounded btn-light" data-product-id="{{ object.product.pk }}">➖</a>
+                    <span class="qty">{{ object.qty }}</span>
+                </td>
+                <td>
+                    <a href="{% url 'store:delete-from-cart' object.product.pk %}" class="btn btn-sm btn-light">
                         ❌
                     </a>
                 </td>

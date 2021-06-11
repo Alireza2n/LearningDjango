@@ -1,5 +1,8 @@
 from django.contrib import messages
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 from inventory import models as inventory_models
 
@@ -78,3 +81,25 @@ def delete_row(request, product_id):
     request.session.modified = True
     messages.success(request, 'حذف شد.')
     return redirect('store:view-cart')
+
+
+@require_POST
+@csrf_exempt
+def deduct_from_cart(request):
+    """
+    Deducts one from product's qty in the cart
+    """
+    product_id = request.POST.get('product_id', None)
+
+    # What if there were not product_id provided?
+    if not product_id:
+        return JsonResponse({'success': False, 'error': 'Invalid data.'}, status=400)
+
+    # Try to deduct from qty
+    try:
+        request.session['cart'][product_id] -= 1
+        request.session.modified = True
+        return JsonResponse({'success': True, 'qty': request.session['cart'][product_id]}, status=200)
+    except KeyError:
+        # What if the product is not in the cart?
+        return JsonResponse({'success': False, 'error': 'Invalid data. Not in the cart.'}, status=400)
