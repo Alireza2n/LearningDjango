@@ -5,6 +5,9 @@ from inventory import models as inventory_models
 
 
 def add_to_cart(request, product_id):
+    """
+    Add a product to cart
+    """
     product_instance = get_object_or_404(inventory_models.Product, pk=product_id)
 
     # 1- Check if product is in stock
@@ -30,7 +33,7 @@ def add_to_cart(request, product_id):
         request.session['cart'][str(product_instance.pk)] = 1
 
     # Save the session!
-    request.session.save()
+    request.session.modified = True
 
     # Method 2
     # try:
@@ -50,6 +53,9 @@ def add_to_cart(request, product_id):
 
 
 def view_cart(request):
+    """
+    Renders the cart items (the basket)
+    """
     object_list = []
     for item in request.session.get('cart', []):
         object_list += [
@@ -62,3 +68,13 @@ def view_cart(request):
     return render(
         request, 'store/view_cart.html', context={'object_list': object_list}
     )
+
+
+def delete_row(request, product_id):
+    """
+    Deletes a product row from cart
+    """
+    request.session['cart'].pop(str(product_id), None)
+    request.session.modified = True
+    messages.success(request, 'حذف شد.')
+    return redirect('store:view-cart')

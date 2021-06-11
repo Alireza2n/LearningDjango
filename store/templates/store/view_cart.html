@@ -6,6 +6,7 @@
             <th>ردیف</th>
             <th>کالا</th>
             <th>تعداد</th>
+            <th>حذف</th>
         </tr>
         </thead>
         <tbody>
@@ -14,10 +15,15 @@
                 <td>{{ forloop.revcounter }}</td>
                 <td>{{ object.product }}</td>
                 <td>{{ object.qty }}</td>
+                <td>
+                    <a href="{% url 'store:delete-from-cart' object.product.pk %}" class="btn btn-sm btn-danger">
+                        ❌
+                    </a>
+                </td>
             </tr>
         {% empty %}
             <tr>
-                <td colspan="3">سبد شما خالی است.</td>
+                <td colspan="4">سبد شما خالی است.</td>
             </tr>
         {% endfor %}
         </tbody>
