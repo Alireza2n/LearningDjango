@@ -32,3 +32,30 @@
         </tbody>
     </table>
 {% endblock %}
+{% block page_scripts %}
+    <script>
+        $(document).ready(function () {
+            $('a.deduct-btn').click(function (event) {
+                // Get the product id from the element that was clicked using
+                // dataset attrib.
+                const productId = event.currentTarget.dataset.productId;
+                // Call the backends
+                $.ajax({
+                    url: "{% url 'store:deduct-from-cart' %}",
+                    data: {
+                        product_id: productId
+                    },
+                    method: 'post',
+                    success: function (response) {
+                         let qtySpan = $(event.currentTarget).next()[0];
+                         qtySpan.innerHTML = response.qty;
+                    },
+                    error: function (response) {
+                        console.log(response);
+                        alert('حذف با خطا مواجه شد.')
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
