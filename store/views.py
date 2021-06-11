@@ -95,6 +95,9 @@ def deduct_from_cart(request):
     if not product_id:
         return JsonResponse({'success': False, 'error': 'Invalid data.'}, status=400)
 
+    # Cast product_id to string
+    product_id = str(product_id)
+
     # Try to deduct from qty
     try:
         request.session['cart'][product_id] -= 1
