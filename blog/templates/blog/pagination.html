@@ -1,0 +1,18 @@
+{# [First] [<] 1....10 [>] [Last] #}
+{% if object_list.has_previous %}
+{#    <a class="btn btn-sm" href="{{ request.path }}?page={{ object_list.number|add:-1 }}">👈</a>#}
+    <a class="btn btn-sm" href="{{ request.path }}?page={{ object_list.previous_page_number }}">👈</a>
+{% else %}
+    <a class="btn btn-sm" href="{{ request.path }}?page=1">First Page</a>
+{% endif %}
+
+{% for n in page_obj %}
+    <a class="btn btn-sm" href="{{ request.path }}?page={{ n.number }}">{{ n.number }}</a>
+{% endfor %}
+
+{% if object_list.has_next %}
+{#    <a class="btn btn-sm" href="{{ request.path }}?page={{ object_list.number|add:1 }}">👉</a>#}
+    <a class="btn btn-sm" href="{{ request.path }}?page={{ object_list.next_page_number }}">👉</a>
+{% else %}
+    <a class="btn btm-sm" href="{{ request.path }}?page={{ page_obj.num_pages }}">Last page</a>
+{% endif %}

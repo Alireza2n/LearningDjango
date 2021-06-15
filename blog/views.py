@@ -1,7 +1,10 @@
+import itertools
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -22,11 +25,21 @@ def show_all_posts(request):
     else:
         my_posts = models.Post.objects.all()
         other_posts = []
+
+    # Combine two querysets into one list
+    qs = list(itertools.chain(my_posts, other_posts))
+
+    # Paginate by using pagination class
+    paginated = Paginator(qs, 2)
+
+    # Now which page are you looking for?
+    paginated_page = paginated.get_page(request.GET.get('page', 1))
+
     return render(
         request=request,
         context={
-            'object_list': my_posts,
-            'object_list_2': other_posts,
+            'object_list': paginated_page,
+            'page_obj': paginated,
             'page_title': 'Show all posts'
         },
         template_name='blog/all_posts.html'
