@@ -14,3 +14,7 @@ services:
       PGDATA: /db_data
     volumes:
       - BlogDbData:/db_data
+  cache:
+    image: "memcached:alpine"
+    ports:
+      - 11211:11211

@@ -1,19 +1,21 @@
 {% extends 'blog/base.html' %}
-{% load static %}
+{% load cache static %}
 {% block page_header_title %}
     نمایش همه پست ها
 {% endblock %}
 {% block content %}
-    <div class="col-2">
-        <h5>Filter by category:</h5>
-        <ul>
-            {% for category in category_list %}
-                <li>
-                    <a href="{% url 'blog:post-by-category' category.0 %}">{{ category.0 }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+    {% cache 3600 1 %}
+        <div class="col-2">
+            <h5>Filter by category:</h5>
+            <ul>
+                {% for category in category_list %}
+                    <li>
+                        <a href="{% url 'blog:post-by-category' category.0 %}">{{ category.0 }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endcache %}
     <div class="col-10 row justify-content-md-left">
         {% for post in object_list %}
             {# One single post #}
