@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
@@ -121,3 +122,41 @@ class OrderViewSet(viewsets.ModelViewSet):
     """
     queryset = models.Order.objects.all()
     serializer_class = serializers.OrderSerializer
+
+
+@login_required
+def finalize_order(request):
+    """
+    Finalize order
+    """
+    cart = request.session.get('cart', None)
+
+    # If cart does not exist or is empty
+    if not cart:
+        messages.error(request, 'سبد شما خالی است.')
+        return redirect('inventory:list')
+
+    order_instance = models.Order.objects.create(owner=request.user)
+
+    for product_id in cart:
+        product = inventory_models.Product.objects.get(pk=product_id)
+        qty = cart[product_id]
+
+        if not product.is_in_stock(qty):
+            messages.error(request, 'کالا به تعداد درخواست شده موجود نیست.')
+            return redirect('store:view-cart')
+
+        order_item_instance = models.OrderItem.objects.create(
+            order=order_instance,
+            qty=qty,
+            product=product,
+            price=product.price
+        )
+
+        # Deduct from stock
+        product.deduct_from_stock(qty)
+
+    messages.info(request, 'سفارش با موفقیت ثبت شد.')
+    request.session.delete('cart')
+    request.session.modified = True
+    return redirect('inventory:list')

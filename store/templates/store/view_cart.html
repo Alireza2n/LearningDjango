@@ -31,6 +31,10 @@
         {% endfor %}
         </tbody>
     </table>
+    <a href="{% url 'store:finalize' %}" class="btn btn-primary">
+        🧺
+        ثبت سفارش
+    </a>
 {% endblock %}
 {% block page_scripts %}
     <script>
@@ -47,8 +51,8 @@
                     },
                     method: 'post',
                     success: function (response) {
-                         let qtySpan = $(event.currentTarget).next()[0];
-                         qtySpan.innerHTML = response.qty;
+                        let qtySpan = $(event.currentTarget).next()[0];
+                        qtySpan.innerHTML = response.qty;
                     },
                     error: function (response) {
                         console.log(response);

@@ -44,3 +44,12 @@ class Product(models.Model):
         :returns: bool
         """
         return qty <= self.qty_in_stock
+
+    def deduct_from_stock(self, qty):
+        """
+        Deducts the qty from self.qty_in_stock
+        returns: int
+        """
+        self.qty_in_stock -= qty
+        self.save()
+        return self.qty_in_stock
