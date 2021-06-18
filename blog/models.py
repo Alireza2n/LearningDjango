@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.db import models
 
 
@@ -20,6 +21,15 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+
+    def get_unreal_likes(self):
+        key = f'unreal_like_{self.pk}'
+        val = cache.get(key)
+        if val is None:
+            x = self.likes ** 2
+            cache.set(key, x)
+            return x
+        return val
 
 
 class Category(models.Model):

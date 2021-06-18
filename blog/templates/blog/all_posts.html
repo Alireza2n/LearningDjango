@@ -4,7 +4,7 @@
     نمایش همه پست ها
 {% endblock %}
 {% block content %}
-    {% cache 3600 1 %}
+    {% cache 3600 categories_sidebar %}
         <div class="col-2">
             <h5>Filter by category:</h5>
             <ul>
@@ -36,7 +36,7 @@
                 <strong>{{ post.creator.first_name }} {{ post.creator.last_name }}</strong>
                 <p>{{ post.content|truncatewords:10 }}</p>
                 {# Like button for the post #}
-                <a class="btn btn-outline-dark text-danger like-btn" data-post-id="{{ post.id }}">❤ Like (<span id="like-count-{{ post.id }}">{{ post.likes }}</span> Likes)</a>
+                <a class="btn btn-outline-dark text-danger like-btn" data-post-id="{{ post.id }}">❤ Like (<span id="like-count-{{ post.id }}">{{ post.get_unreal_likes }}</span> Likes)</a>
             </div>
         {% endfor %}
     </div>
