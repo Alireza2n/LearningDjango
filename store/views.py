@@ -158,5 +158,7 @@ def finalize_order(request):
 
     messages.info(request, 'سفارش با موفقیت ثبت شد.')
     request.session.pop('cart')
+    # or
+    # del request.session['cart']
     request.session.modified = True
     return redirect('inventory:list')
