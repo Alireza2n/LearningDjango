@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>شماره سفارش</th>
+            <th>تاریخ سفارش</th>
+            <th>وضعیت</th>
+            <th>کالاها</th>
+        </tr>
+        </thead>
+        {% for order in object_list %}
+            <tr>
+                <td>{{ order.pk }}</td>
+                <td>{{ order.created_on }}</td>
+                <td>{{ order.get_status_display }}</td>
+                <td>
+                    {% for item in order.orderitem_set.all %}
+                        <p style="direction: rtl;">
+                            {{ forloop.counter }}- {{ item.product }} ❎ {{ item.qty }}
+                        </p>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

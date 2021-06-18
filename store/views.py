@@ -1,9 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.views.generic import ListView
 from rest_framework import viewsets
 
 from inventory import models as inventory_models
@@ -146,7 +148,7 @@ def finalize_order(request):
             messages.error(request, 'کالا به تعداد درخواست شده موجود نیست.')
             return redirect('store:view-cart')
 
-        order_item_instance = models.OrderItem.objects.create(
+        models.OrderItem.objects.create(
             order=order_instance,
             qty=qty,
             product=product,
@@ -162,3 +164,12 @@ def finalize_order(request):
     # del request.session['cart']
     request.session.modified = True
     return redirect('inventory:list')
+
+
+class ListOrdersView(LoginRequiredMixin, ListView):
+    model = models.Order
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(owner=self.request.user)
+        return qs
