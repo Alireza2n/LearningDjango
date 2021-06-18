@@ -157,6 +157,6 @@ def finalize_order(request):
         product.deduct_from_stock(qty)
 
     messages.info(request, 'سفارش با موفقیت ثبت شد.')
-    request.session.delete('cart')
+    request.session.pop('cart')
     request.session.modified = True
     return redirect('inventory:list')
