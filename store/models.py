@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django_jalali.db import models as jmodels
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext as _
+from django_jalali.db import models as jmodels
+
 from . import enums
 
 
@@ -21,6 +23,14 @@ class Order(models.Model):
 
     def __str__(self):
         return f'Order #{self.pk} for {self.owner.get_full_name()}'
+
+    def get_formatted_date(self):
+        return self.created_on.strftime('%Y-%m-%d')
+
+    # @property
+    @cached_property
+    def formatted_date(self):
+        return self.get_formatted_date()
 
 
 class OrderItem(models.Model):
