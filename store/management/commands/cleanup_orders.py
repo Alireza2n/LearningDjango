@@ -20,3 +20,5 @@ class Command(BaseCommand):
             if diff.days > 1:
                 order.set_as_canceled()
                 print(f"Set Order #{order.pk} as canceled.")
+            else:
+                print(f"Order #{order.pk} is less than 1 days old.")
