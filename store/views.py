@@ -168,6 +168,7 @@ def finalize_order(request):
 
 class ListOrdersView(LoginRequiredMixin, ListView):
     model = models.Order
+    paginate_by = 10
 
     def get_queryset(self):
         qs = super().get_queryset()

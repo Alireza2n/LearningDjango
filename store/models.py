@@ -32,6 +32,10 @@ class Order(models.Model):
     def formatted_date(self):
         return self.get_formatted_date()
 
+    def set_as_canceled(self):
+        self.status = enums.OrderStatuses.CANCELED
+        self.save()
+
 
 class OrderItem(models.Model):
     """

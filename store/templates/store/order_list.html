@@ -17,13 +17,14 @@
                 {#                <td>{{ order.created_on.time }}</td>#}
                 {#                <td>{{ order.created_on.date }}</td>#}
                 {# Method 2 #}
-                {#                <td>{{ order.get_status_display }}</td>#}
+                {#                <td>{{ order.get_formatted_date }}</td>#}
                 {# Method 3 #}
                 {#                <td>{{ order.formatted_date }}</td>#}
                 {# Method 4: Template tag #}
                 <td>{{ order.created_on|jdate:"%Y-%m-%d %H:%M" }}</td>
                 {# Method 5: Humanize #}
                 {#                <td>{{ order.created_on|naturaltime }}</td>#}
+                <td>{{ order.get_status_display }}</td>
                 <td>
                     {% for item in order.orderitem_set.all %}
                         <p style="direction: rtl;">
@@ -34,4 +35,5 @@
             </tr>
         {% endfor %}
     </table>
+    {% include 'blog/pagination.html' %}
 {% endblock %}
