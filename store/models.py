@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 from django_jalali.db import models as jmodels
 
 from . import enums
+from .signals import order_placed
 
 
 class Order(models.Model):
@@ -35,6 +36,22 @@ class Order(models.Model):
     def set_as_canceled(self):
         self.status = enums.OrderStatuses.CANCELED
         self.save()
+
+    def save(self, **kwargs):
+        # Is this object new or edited
+        if self.pk is None:
+            created = True
+        else:
+            created = False
+
+        super().save(**kwargs)
+
+        # Dispatch order_placed signed
+        order_placed.send(
+            sender=self.__class__,
+            instance=self,
+            created=created
+        )
 
 
 class OrderItem(models.Model):
