@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -10,6 +12,8 @@ from rest_framework import viewsets
 
 from inventory import models as inventory_models
 from . import models, serializers
+
+logger = logging.getLogger(__name__)
 
 
 def add_to_cart(request, product_id):
@@ -160,6 +164,8 @@ def finalize_order(request):
 
     messages.info(request, 'سفارش با موفقیت ثبت شد.')
     request.session.pop('cart')
+    logger.info(f"User #{request.user.pk} placed the order #{order_instance.pk}.")
+
     # or
     # del request.session['cart']
     request.session.modified = True
