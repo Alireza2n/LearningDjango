@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.functional import cached_property
@@ -6,6 +8,8 @@ from django_jalali.db import models as jmodels
 
 from . import enums
 from .signals import order_placed
+
+logger = logging.getLogger(__name__)
 
 
 class Order(models.Model):
@@ -34,8 +38,12 @@ class Order(models.Model):
         return self.get_formatted_date()
 
     def set_as_canceled(self):
+        """
+        Sets the order as canceled
+        """
         self.status = enums.OrderStatuses.CANCELED
         self.save()
+        logger.info(f'Order #{self.pk} was set as CANCELED.')
 
     def save(self, **kwargs):
         # Is this object new or edited
@@ -52,6 +60,7 @@ class Order(models.Model):
             instance=self,
             created=created
         )
+        logger.debug(f'order_placed signal was sent for Order #{self.pk}.')
 
 
 class OrderItem(models.Model):
