@@ -192,6 +192,10 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs', 'users.log'),
         },
+        'mail_admins': {
+            'level': 'INFO',
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
     },
     # Loggers
     'root': {
@@ -200,7 +204,7 @@ LOGGING = {
     },
     'loggers': {
         'store': {
-            'handlers': ['file_store', 'console'],
+            'handlers': ['file_store', 'console', 'mail_admins'],
             'level': 'INFO',
         },
         'users': {
@@ -209,3 +213,14 @@ LOGGING = {
         },
     }
 }
+
+ADMINS = [('Alireza', 'alireza@amouzadeh.net')]
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = ''
+SERVER_EMAIL = ''
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
