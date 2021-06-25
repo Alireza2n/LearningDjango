@@ -159,13 +159,34 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        # Key name is defined by us
+        'verbose': {
+            # These keys are defined by python/django
+            # There are a couple of pre-defined palce-holders
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            # 'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {asctime} {message}',
+            'style': '{',
+        },
+    },
+    'filters': {
+        'required_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'filters': ['required_debug_true'],
         },
         'file_store': {
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs', 'store.log'),
+            'formatter': 'simple'
         },
         'file_users': {
             'class': 'logging.handlers.RotatingFileHandler',
@@ -179,7 +200,7 @@ LOGGING = {
     },
     'loggers': {
         'store': {
-            'handlers': ['file_store'],
+            'handlers': ['file_store', 'console'],
             'level': 'INFO',
         },
         'users': {
