@@ -20,6 +20,7 @@ services:
       - 11211:11211
   broker:
     image: "rabbitmq:alpine"
+    hostname: 'maktab_broker'
     ports:
       - 5672:5672
   mailhog:

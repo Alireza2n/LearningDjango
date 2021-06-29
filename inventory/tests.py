@@ -28,3 +28,5 @@ class ProductTestCase(TestCase):
         obj = Product.objects.first()
         qty = obj.deduct_from_stock(10)
         self.assertEqual(qty, 90)
+
+
