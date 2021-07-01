@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load i18n %}
 {% block content %}
     <table class="table table-striped">
         <thead>
@@ -33,7 +34,7 @@
     </table>
     <a href="{% url 'store:finalize' %}" class="btn btn-primary">
         🧺
-        ثبت سفارش
+        {% trans 'ثبت سفارش' %}
     </a>
 {% endblock %}
 {% block page_scripts %}

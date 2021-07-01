@@ -3,7 +3,7 @@ import logging
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django_jalali.db import models as jmodels
 
 from . import enums
@@ -16,11 +16,11 @@ class Order(models.Model):
     """
     Represents an order
     """
-    owner = models.ForeignKey(get_user_model(), on_delete=models.PROTECT)
-    created_on = jmodels.jDateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, verbose_name=_('ثبت کننده سفارش'))
+    created_on = jmodels.jDateTimeField(auto_now_add=True, verbose_name=_('تاریخ ثبت'))
     status = models.CharField(
-        verbose_name=_('Status'),
-        help_text='وضعیت سفارش',
+        verbose_name=_('وضعیت'),
+        help_text=_('وضعیت سفارش'),
         choices=enums.OrderStatuses.choices,
         default=enums.OrderStatuses.CREATED,
         max_length=100
@@ -69,6 +69,6 @@ class OrderItem(models.Model):
     """
     order = models.ForeignKey('store.Order', on_delete=models.CASCADE)
     product = models.ForeignKey('inventory.Product', on_delete=models.PROTECT)
-    qty = models.PositiveIntegerField(default=1)
-    discount = models.FloatField(default=0)
-    price = models.PositiveIntegerField()
+    qty = models.PositiveIntegerField(default=1, verbose_name=_('تعداد'))
+    discount = models.FloatField(default=0, verbose_name=_('تخفیف'))
+    price = models.PositiveIntegerField(verbose_name=_('قیمت'))

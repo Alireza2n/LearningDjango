@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from . import enums
 
@@ -10,23 +10,29 @@ class Product(models.Model):
     """
     name = models.CharField(
         max_length=200,
-        verbose_name='نام کالا',
+        verbose_name=_('نام کالا'),
         db_index=True
     )
     description = models.TextField(
-        verbose_name=_('Description'),
+        verbose_name=_('توضحیات محصول'),
         help_text='متن نمایشی برای توصیف محصول'
     )
     price = models.PositiveIntegerField(default=0, db_index=True)
     qty_in_stock = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(
         default=False,
-        help_text='آیا این محصول فروخته میشود؟'
+        help_text=_('آیا این محصول فروخته میشود؟'),
+        verbose_name=_('آیا فعال است؟')
     )
     type = models.CharField(
         max_length=100,
-        choices=enums.ProductTypes.choices
+        choices=enums.ProductTypes.choices,
+        verbose_name=_('نوع محصول')
     )
+
+    class Meta:
+        verbose_name = _('کالا')
+        verbose_name_plural = _('کالاها')
 
     def __str__(self):
         return self.name
