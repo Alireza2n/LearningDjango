@@ -17,7 +17,9 @@
                 <th class="">{% trans 'شماره سفارش' %}</th>
                 <th class="">{% trans 'تاریخ سفارش' %}</th>
                 <th class="">{% trans 'وضعیت' %}</th>
-                <th class="w-50">{% trans 'کالاها' %}</th>
+                <th class="w-25">{% trans 'کالاها' %}</th>
+                <th class="">{% trans 'تعداد کالاها' %}</th>
+                <th class="">{% trans 'مبلغ قابل پرداخت' %}</th>
             </tr>
             </thead>
             {% for order in object_list %}
@@ -42,6 +44,8 @@
                             </p>
                         {% endfor %}
                     </td>
+                    <td>{{ order.get_total_qty }}</td>
+                    <td></td>
                 </tr>
             {% endfor %}
         </table>

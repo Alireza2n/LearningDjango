@@ -2,6 +2,7 @@ import logging
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import Sum
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django_jalali.db import models as jmodels
@@ -61,6 +62,17 @@ class Order(models.Model):
             created=created
         )
         logger.debug(f'order_placed signal was sent for Order #{self.pk}.')
+
+    def get_total_qty(self):
+        """
+        Sums total qty of related order items in PYTHON
+        (which is inefficient)
+        """
+        # t = 0
+        # for item in self.orderitem_set.all():
+        #     t += item.qty
+        # return t
+        return self.orderitem_set.aggregate(Sum('qty')).get('qty__sum', 0)
 
 
 class OrderItem(models.Model):
