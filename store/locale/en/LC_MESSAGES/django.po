@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-01 15:55+0430\n"
-"PO-Revision-Date: 2021-07-01 16:01+0430\n"
+"POT-Creation-Date: 2021-07-01 16:34+0430\n"
+"PO-Revision-Date: 2021-07-01 16:35+0430\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.4.1\n"
 
 #: store/enums.py:9
@@ -41,7 +41,7 @@ msgstr "Created by"
 msgid "تاریخ ثبت"
 msgstr "Created on"
 
-#: store/models.py:22
+#: store/models.py:22 store/templates/store/order_list.html:10
 msgid "وضعیت"
 msgstr "Status"
 
@@ -60,6 +60,18 @@ msgstr "Discount"
 #: store/models.py:74
 msgid "قیمت"
 msgstr "Price"
+
+#: store/templates/store/order_list.html:8
+msgid "شماره سفارش"
+msgstr "Order Number"
+
+#: store/templates/store/order_list.html:9
+msgid "تاریخ سفارش"
+msgstr "Order Created On"
+
+#: store/templates/store/order_list.html:11
+msgid "کالاها"
+msgstr "Items"
 
 #: store/templates/store/view_cart.html:37
 msgid "ثبت سفارش"

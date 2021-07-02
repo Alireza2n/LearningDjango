@@ -1,13 +1,16 @@
 {% extends 'blog/base.html' %}
+{% load i18n %}
 {% load mytags humanize %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
 {% block content %}
-    <table class="table table-bordered table-striped">
+    <div class="container">
+    <table class="table table-bordered table-striped {% if LANGUAGE_BIDI %}rtl{% endif %}">
         <thead>
         <tr>
-            <th>شماره سفارش</th>
-            <th>تاریخ سفارش</th>
-            <th>وضعیت</th>
-            <th>کالاها</th>
+            <th>{% trans 'شماره سفارش' %}</th>
+            <th>{% trans 'تاریخ سفارش' %}</th>
+            <th>{% trans 'وضعیت' %}</th>
+            <th>{% trans 'کالاها' %}</th>
         </tr>
         </thead>
         {% for order in object_list %}
@@ -36,4 +39,5 @@
         {% endfor %}
     </table>
     {% include 'blog/pagination.html' %}
+    </div>
 {% endblock %}

@@ -1,0 +1,18 @@
+/*
+Custom styles for our application
+*/
+@font-face {
+    font-family: "Vazir";
+    font-style: normal;
+    src: url("../fonts/vazir/Vazir-Regular.woff") format('woff'),
+    url("../fonts/vazir/Vazir-Regular.woff2") format('woff2');
+}
+
+
+.nav-link {
+    font-family: Vazir, serif;
+}
+
+p {
+    font-family: Vazir, serif;
+}
