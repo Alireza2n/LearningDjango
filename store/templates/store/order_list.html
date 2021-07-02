@@ -2,42 +2,49 @@
 {% load i18n %}
 {% load mytags humanize %}
 {% get_current_language_bidi as LANGUAGE_BIDI %}
+{% block page_header_title %}
+    {% trans 'سفارش های من' %}
+{% endblock %}
 {% block content %}
     <div class="container">
-    <table class="table table-bordered table-striped {% if LANGUAGE_BIDI %}rtl{% endif %}">
-        <thead>
-        <tr>
-            <th>{% trans 'شماره سفارش' %}</th>
-            <th>{% trans 'تاریخ سفارش' %}</th>
-            <th>{% trans 'وضعیت' %}</th>
-            <th>{% trans 'کالاها' %}</th>
-        </tr>
-        </thead>
-        {% for order in object_list %}
+        <h1 class="text-success">
+            <i class="fa fa-shopping-basket"></i>
+            {% trans 'سفارش های من' %}
+        </h1>
+        <table class="table table-bordered table-striped rtl mt-4">
+            <thead>
             <tr>
-                <td>{{ order.pk }}</td>
-                {# Method 1 #}
-                {#                <td>{{ order.created_on.time }}</td>#}
-                {#                <td>{{ order.created_on.date }}</td>#}
-                {# Method 2 #}
-                {#                <td>{{ order.get_formatted_date }}</td>#}
-                {# Method 3 #}
-                {#                <td>{{ order.formatted_date }}</td>#}
-                {# Method 4: Template tag #}
-                <td>{{ order.created_on|jdate:"%Y-%m-%d %H:%M" }}</td>
-                {# Method 5: Humanize #}
-                {#                <td>{{ order.created_on|naturaltime }}</td>#}
-                <td>{{ order.get_status_display }}</td>
-                <td>
-                    {% for item in order.orderitem_set.all %}
-                        <p style="direction: rtl;">
-                            {{ forloop.counter }}- {{ item.product }} ❎ {{ item.qty }}
-                        </p>
-                    {% endfor %}
-                </td>
+                <th class="">{% trans 'شماره سفارش' %}</th>
+                <th class="">{% trans 'تاریخ سفارش' %}</th>
+                <th class="">{% trans 'وضعیت' %}</th>
+                <th class="w-50">{% trans 'کالاها' %}</th>
             </tr>
-        {% endfor %}
-    </table>
-    {% include 'blog/pagination.html' %}
+            </thead>
+            {% for order in object_list %}
+                <tr>
+                    <td>{{ order.pk }}</td>
+                    {# Method 1 #}
+                    {#                <td>{{ order.created_on.time }}</td>#}
+                    {#                <td>{{ order.created_on.date }}</td>#}
+                    {# Method 2 #}
+                    {#                <td>{{ order.get_formatted_date }}</td>#}
+                    {# Method 3 #}
+                    {#                <td>{{ order.formatted_date }}</td>#}
+                    {# Method 4: Template tag #}
+                    <td>{{ order.created_on|jdate:"%Y-%m-%d %H:%M" }}</td>
+                    {# Method 5: Humanize #}
+                    {#                <td>{{ order.created_on|naturaltime }}</td>#}
+                    <td>{{ order.get_status_display }}</td>
+                    <td>
+                        {% for item in order.orderitem_set.all %}
+                            <p class="rtl">
+                                {{ forloop.counter }}- {{ item.product }} ❎ {{ item.qty }}
+                            </p>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% include 'blog/pagination.html' %}
     </div>
 {% endblock %}
