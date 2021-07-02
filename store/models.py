@@ -2,7 +2,7 @@ import logging
 
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Sum, F
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django_jalali.db import models as jmodels
@@ -73,6 +73,20 @@ class Order(models.Model):
         #     t += item.qty
         # return t
         return self.orderitem_set.aggregate(Sum('qty')).get('qty__sum', 0)
+
+    def get_item_rows(self):
+        return self.orderitem_set.count()
+
+    def get_grand_total(self):
+        """
+        Returns grand total of Order
+        """
+        # t = 0
+        # for item in self.orderitem_set.all():
+        #     t += item.qty * item.price
+        # return t
+        return self.orderitem_set.all().annotate(grand_total=F('qty') * F('price')) \
+        .aggregate(Sum('grand_total'))['grand_total__sum']
 
 
 class OrderItem(models.Model):

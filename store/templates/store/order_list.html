@@ -19,6 +19,7 @@
                 <th class="">{% trans 'وضعیت' %}</th>
                 <th class="w-25">{% trans 'کالاها' %}</th>
                 <th class="">{% trans 'تعداد کالاها' %}</th>
+                <th class="">{% trans 'تعداد ردیف ها' %}</th>
                 <th class="">{% trans 'مبلغ قابل پرداخت' %}</th>
             </tr>
             </thead>
@@ -45,7 +46,11 @@
                         {% endfor %}
                     </td>
                     <td>{{ order.get_total_qty }}</td>
-                    <td></td>
+                    <td>{{ order.get_item_rows }}</td>
+                    <td>
+                        {{ order.get_grand_total }}
+                         ریال
+                    </td>
                 </tr>
             {% endfor %}
         </table>
