@@ -1,4 +1,5 @@
 from django import forms
+
 from . import models
 
 
@@ -22,3 +23,6 @@ class PostForm(forms.ModelForm):
             'intro_image',
             'categories'
         ]
+        # widgets = {
+        #     'title': forms.NumberInput()
+        # }

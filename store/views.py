@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from rest_framework import viewsets
 
 from inventory import models as inventory_models
@@ -180,3 +180,7 @@ class ListOrdersView(LoginRequiredMixin, ListView):
         qs = super().get_queryset()
         qs = qs.filter(owner=self.request.user)
         return qs
+
+
+class PrintOrder(LoginRequiredMixin, DetailView):
+    model = models.Order

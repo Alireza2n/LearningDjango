@@ -21,6 +21,7 @@
                 <th class="">{% trans 'تعداد کالاها' %}</th>
                 <th class="">{% trans 'تعداد ردیف ها' %}</th>
                 <th class="">{% trans 'مبلغ قابل پرداخت' %}</th>
+                <th class="">{% trans 'چاپ' %}</th>
             </tr>
             </thead>
             {% for order in object_list %}
@@ -49,7 +50,12 @@
                     <td>{{ order.get_item_rows }}</td>
                     <td>
                         {{ order.get_grand_total }}
-                         ریال
+                        ریال
+                    </td>
+                    <td>
+                        <a href="{% url 'store:print-order' order.pk %}" class="btn btn-primary">
+                            <i class="fa fa-print"></i>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

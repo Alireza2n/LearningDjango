@@ -1,0 +1,40 @@
+<dl>
+    <dt>نام خریدار</dt>
+    <dd>{{ object.owner.get_full_name }}</dd>
+    <dt>تاریخ سفارش</dt>
+    <dd>{{ object.created_on.date }}</dd>
+</dl>
+<table>
+    <thead>
+    <tr>
+        <th>ردیف</th>
+        <th>نام کالا</th>
+        <th>تعداد</th>
+        <th>قیمت</th>
+        <th>جمع</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in object.orderitem_set.all %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.prodcut }}</td>
+            <td>{{ item.qty }}</td>
+            <td>{{ item.price }} ریال</td>
+            <td>{{ item.get_total }} ریال</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3">
+            {{ object.get_total_qty }}
+        </td>
+        <td colspan="2">
+            مبلغ قابل پرداخت:
+            {{ object.get_grand_total }}
+            ریال
+        </td>
+    </tr>
+    </tfoot>
+</table>

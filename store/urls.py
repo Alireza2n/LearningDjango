@@ -15,5 +15,6 @@ urlpatterns = [
     path('deduct/', views.deduct_from_cart, name='deduct-from-cart'),
     path('finalize/', views.finalize_order, name='finalize'),
     path('list-orders/', views.ListOrdersView.as_view(), name='list-orders'),
+    path('print/<int:pk>', views.PrintOrder.as_view(), name='print-order'),
     path('api/v1/', include(router.urls)),
 ]

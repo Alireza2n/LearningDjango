@@ -81,12 +81,15 @@ class Order(models.Model):
         """
         Returns grand total of Order
         """
+        # Using pythin
         # t = 0
         # for item in self.orderitem_set.all():
         #     t += item.qty * item.price
         # return t
+
+        # Using aggregate and annotate
         return self.orderitem_set.all().annotate(grand_total=F('qty') * F('price')) \
-        .aggregate(Sum('grand_total'))['grand_total__sum']
+            .aggregate(Sum('grand_total'))['grand_total__sum']
 
 
 class OrderItem(models.Model):
@@ -98,3 +101,6 @@ class OrderItem(models.Model):
     qty = models.PositiveIntegerField(default=1, verbose_name=_('تعداد'))
     discount = models.FloatField(default=0, verbose_name=_('تخفیف'))
     price = models.PositiveIntegerField(verbose_name=_('قیمت'))
+
+    def get_total(self):
+        return self.qty * self.price

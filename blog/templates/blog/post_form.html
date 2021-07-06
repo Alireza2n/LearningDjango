@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load widget_tweaks %}
 {% block page_header_title %}
     🆕 {{ page_title }}
 {% endblock %}
@@ -9,11 +10,11 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="title">عنوان پست</label>
-                <input type="text" id="title" class="form-control" value="{{ form.initial.title }}" name="title">
+                {{ form.title|add_class:'form-control' }}
             </div>
             <div class="form-group">
                 <label for="content">متن پست</label>
-                <textarea name="content" id="content" cols="50" rows="10" class="form-control">{{ form.initial.content }}</textarea>
+                {{ form.content|add_class:'form-control'|attr:"cols:50"|attr:"rows:10" }}
             </div>
             <div class="form-group">
                 {{ form.intro_image }}
