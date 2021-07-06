@@ -1,9 +1,10 @@
 import logging
 
+import weasyprint
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -184,3 +185,15 @@ class ListOrdersView(LoginRequiredMixin, ListView):
 
 class PrintOrder(LoginRequiredMixin, DetailView):
     model = models.Order
+
+    def get(self, request, *args, **kwargs):
+        # Call parents as normal
+        g = super(PrintOrder, self).get(request, *args, **kwargs)
+
+        # Get the rendered content and pass it to weasyprint
+        rendered_content = g.rendered_content
+        pdf = weasyprint.HTML(string=rendered_content).write_pdf()
+
+        # Create a new http response with pdf mime type
+        response = HttpResponse(pdf, content_type='application/pdf')
+        return response
