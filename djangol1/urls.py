@@ -27,6 +27,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('inventory/', include('inventory.urls')),
     path('store/', include('store.urls')),
+    path('api-auth/', include('rest_framework.urls')),
     path('', show_all_posts, name='home'),
 ]
 

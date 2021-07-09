@@ -12,7 +12,7 @@ from django.views.generic import ListView, DetailView
 from rest_framework import viewsets
 
 from inventory import models as inventory_models
-from . import models, serializers
+from . import models, serializers, permissions
 
 logger = logging.getLogger(__name__)
 
@@ -129,6 +129,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     """
     queryset = models.Order.objects.all()
     serializer_class = serializers.OrderSerializer
+    permission_classes = [permissions.IsOwnerOrReadOnly]
 
 
 @login_required
