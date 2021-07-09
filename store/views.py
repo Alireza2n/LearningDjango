@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView, DetailView
 from rest_framework import viewsets
+from rest_framework.exceptions import NotAuthenticated
 
 from inventory import models as inventory_models
 from . import models, serializers, permissions
@@ -129,7 +130,13 @@ class OrderViewSet(viewsets.ModelViewSet):
     """
     queryset = models.Order.objects.all()
     serializer_class = serializers.OrderSerializer
-    permission_classes = [permissions.IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsOwner]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.request.user.is_anonymous:
+            raise NotAuthenticated('You need to be logged on.')
+        return qs.filter(owner=self.request.user)
 
 
 @login_required
