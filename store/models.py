@@ -13,6 +13,18 @@ from .signals import order_placed
 logger = logging.getLogger(__name__)
 
 
+class OrderQuerySetManager(models.QuerySet):
+    """
+    Custom QuerySet Manager
+    """
+
+    def filter_by_owner(self, user):
+        """
+        Filters objects by owner field
+        """
+        return self.filter(owner=user)
+
+
 class Order(models.Model):
     """
     Represents an order
@@ -26,6 +38,8 @@ class Order(models.Model):
         default=enums.OrderStatuses.CREATED,
         max_length=100
     )
+
+    objects = OrderQuerySetManager.as_manager()
 
     def __str__(self):
         return f'Order #{self.pk} for {self.owner.get_full_name()}'

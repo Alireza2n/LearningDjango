@@ -136,7 +136,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         qs = super().get_queryset()
         if self.request.user.is_anonymous:
             raise NotAuthenticated('You need to be logged on.')
-        return qs.filter(owner=self.request.user)
+        return qs.filter_by_owner(self.request.user)
 
 
 @login_required
