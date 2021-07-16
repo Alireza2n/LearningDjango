@@ -6,8 +6,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.http import is_safe_url
 from django.views.generic import UpdateView
+from rest_framework import viewsets, permissions
 
-from . import forms
+from . import forms, serializers
 
 
 def login_view(request):
@@ -72,3 +73,9 @@ class EditUserProfile(LoginRequiredMixin, UpdateView):
         Overridden to only return current logged on user
         """
         return self.request.user
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = get_user_model().objects.all()
+    serializer_class = serializers.UserSerializer
+    permission_classes = [permissions.IsAuthenticated]

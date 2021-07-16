@@ -18,8 +18,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
 from blog.views import show_all_posts
+from store import views as store_views
+from users import views as user_views
+
+router = DefaultRouter()
+router.register('store', store_views.OrderViewSet)
+router.register('users', user_views.UserViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +35,7 @@ urlpatterns = [
     path('inventory/', include('inventory.urls')),
     path('store/', include('store.urls')),
     path('api-auth/', include('rest_framework.urls')),
+    path('api/v1/', include(router.urls)),
     path('', show_all_posts, name='home'),
 ]
 
@@ -36,4 +44,5 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Add django debug toolbar if we are in debug mode
 if settings.DEBUG:
     import debug_toolbar
+
     urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]
