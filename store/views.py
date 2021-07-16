@@ -139,6 +139,15 @@ class OrderViewSet(viewsets.ModelViewSet):
         return qs.filter_by_owner(self.request.user)
 
 
+class OrderItemViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for store.Order
+    """
+    queryset = models.OrderItem.objects.all()
+    serializer_class = serializers.OrderItemSerializer
+    permission_classes = [permissions.IsOwnerOfParent]
+
+
 @login_required
 def finalize_order(request):
     """

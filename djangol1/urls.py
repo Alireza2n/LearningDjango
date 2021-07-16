@@ -25,7 +25,8 @@ from store import views as store_views
 from users import views as user_views
 
 router = DefaultRouter()
-router.register('store', store_views.OrderViewSet)
+router.register('store/orders', store_views.OrderViewSet)
+router.register('store/order-items', store_views.OrderItemViewSet)
 router.register('users', user_views.UserViewSet)
 
 urlpatterns = [

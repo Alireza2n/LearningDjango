@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from users.serializers import UserSerializer
 from . import models
 
 
@@ -15,5 +14,17 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
             'pk',
             'owner',
             'status',
-            # 'orderitem_set'
+            'orderitem_set'
+        )
+
+
+class OrderItemSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = models.OrderItem
+        fields = (
+            'pk',
+            'product',
+            'qty',
+            'discount',
+            'price',
         )
