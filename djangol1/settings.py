@@ -210,7 +210,7 @@ LOGGING = {
     },
     'loggers': {
         'store': {
-            'handlers': ['file_store', 'console', 'mail_admins'],
+            'handlers': ['file_store', 'console'],
             'level': 'INFO',
         },
         'users': {
